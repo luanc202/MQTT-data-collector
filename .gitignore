@@ -1,0 +1,7 @@
+# data
+
+influxdb2/*
+
+# env
+
+.env*
