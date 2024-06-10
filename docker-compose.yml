@@ -1,0 +1,49 @@
+
+
+networks:
+  main-network:
+    driver: bridge
+
+volumes:
+  influxdb-data:
+
+services:
+  influxdb:
+    container_name: influxdb2-database
+    image: influxdb:2
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${DOCKER_INFLUXDB_INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${DOCKER_INFLUXDB_INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${DOCKER_INFLUXDB_INIT_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=data-collector
+    volumes:
+      - ./influxdb2/data:/var/lib/influxdb2
+      - ./influxdb2/config:/etc/influxdb2
+    networks:
+      - main-network
+    env_file:
+      - .env
+  data-collector:
+    image: data-collector-server
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=${PORT}
+      - INFLUXDB_TOKEN=${INFLUXDB_TOKEN}
+      - DOCKER_INFLUXDB_INIT_ORG=${DOCKER_INFLUXDB_INIT_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${DOCKER_INFLUXDB_INIT_BUCKET}
+      - MQTT_BROKER_URL=${MQTT_BROKER_URL}
+      - MQTT_TOPIC=${MQTT_TOPIC}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdb
+    env_file:
+      - .env
+    networks:
+      - main-network
