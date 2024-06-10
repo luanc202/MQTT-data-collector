@@ -11,13 +11,9 @@ var (
 )
 
 func InitConfigs() error {
-	var err error
 	env := GetEnvConfig()
 
 	db = influxdb2.NewClient(env.DBUrl, env.InfluxDBToken)
-	if err != nil {
-		panic(err)
-	}
 
 	return nil
 }
