@@ -3,13 +3,13 @@ module github.com/luanc202/timeseriesSensorCollector
 go 1.21.5
 
 require (
+	github.com/eclipse/paho.mqtt.golang v1.4.3
 	github.com/influxdata/influxdb-client-go/v2 v2.13.0
 	github.com/spf13/viper v1.19.0
 )
 
 require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
-	github.com/eclipse/paho.mqtt.golang v1.4.3 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
