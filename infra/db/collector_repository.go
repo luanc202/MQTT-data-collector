@@ -21,17 +21,16 @@ type CollectorRepository struct {
 	client influxdb2.Client
 }
 
-func NewCollectorRepository(writeAPIconnection api.WriteAPIBlocking, queryAPIconnection api.QueryAPI) interfaces.CollectorRepository {
+func NewCollectorRepository(writeAPIconnection api.WriteAPIBlocking, queryAPIconnection api.QueryAPI, clientConnection influxdb2.Client) interfaces.CollectorRepository {
 	return &CollectorRepository{
 		writeAPI: writeAPIconnection,
     queryAPI: queryAPIconnection,
+		client: clientConnection,
 	}
 }
 
 func (cr *CollectorRepository) Save(measuresDto *dto.SensorDataDto) error {
-
 	dataToSave := entity.NewSensorData(measuresDto.Temperature, measuresDto.Luminosity)
-
 	point := influxdb2.NewPoint("sensor",
 	map[string]string{"device": "ESP32"},
 	map[string]interface{}{
@@ -39,16 +38,15 @@ func (cr *CollectorRepository) Save(measuresDto *dto.SensorDataDto) error {
 		"luminosity": dataToSave.Luminosity,
 	},
 	time.Now())
-
+	
 	err := cr.writeAPI.WritePoint(context.Background(), point)
+	defer cr.client.Close()
 
 	if err != nil {
 		return fmt.Errorf("error on saving data: %w", err)
 	}
 
-	defer cr.client.Close()
-
-	logger.Info(fmt.Printf("Saved new entry with values for temperature: %f and luminosity: %d", measuresDto.Temperature, measuresDto.Luminosity))
+	logger.Info(fmt.Sprintf("Saved new entry with values for temperature: %f and luminosity: %d", measuresDto.Temperature, measuresDto.Luminosity))
 
 	return nil
 }
