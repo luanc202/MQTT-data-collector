@@ -8,7 +8,7 @@ type SensorDataDto struct {
 }
 
 func (s *SensorDataDto) Validate() error {
-  if s.Luminosity > 4066 {
+  if s.Luminosity > 4096 {
     return fmt.Errorf("luminosity value above maximum expected")
   }
 
