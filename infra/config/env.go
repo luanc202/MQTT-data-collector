@@ -5,14 +5,14 @@ import "github.com/spf13/viper"
 var env *envconfig
 
 type envconfig struct {
-	DBUrl         string `mapstructure:"DATABASE_URL"`
-	PORT          string `mapstructure:"PORT"`
-	ENV           string `mapstructure:"ENVIRONMENT"`
-	InfluxDBToken string `mapstructure:"INFLUXDB_TOKEN"`
-	InfluxDB_Org string `mapstructure:"DOCKER_INFLUXDB_INIT_ORG"`
+	DBUrl           string `mapstructure:"DATABASE_URL"`
+	PORT            string `mapstructure:"PORT"`
+	ENV             string `mapstructure:"ENVIRONMENT"`
+	InfluxDBToken   string `mapstructure:"INFLUXDB_TOKEN"`
+	InfluxDB_Org    string `mapstructure:"DOCKER_INFLUXDB_INIT_ORG"`
 	InfluxDB_Bucket string `mapstructure:"DOCKER_INFLUXDB_INIT_BUCKET"`
 	MQTT_Broker_url string `mapstructure:"MQTT_BROKER_URL"`
-	MQTT_Topic string `mapstructure:"MQTT_TOPIC"`
+	MQTT_Topic      string `mapstructure:"MQTT_TOPIC"`
 }
 
 func GetEnvConfig() *envconfig {

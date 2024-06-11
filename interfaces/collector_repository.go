@@ -5,5 +5,5 @@ import (
 )
 
 type CollectorRepository interface {
-  Save(*dto.SensorDataDto) (error)
+	Save(*dto.SensorDataDto) error
 }

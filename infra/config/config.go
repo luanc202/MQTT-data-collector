@@ -13,7 +13,7 @@ var (
 	queryAPI           api.QueryAPI
 	logger             *Logger
 	StandardDateLayout = "2006-01-02"
-	influxdb2Client influxdb2.Client
+	influxdb2Client    influxdb2.Client
 	mqttClient         mqtt.Client
 )
 

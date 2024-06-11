@@ -18,27 +18,27 @@ var logger = config.GetLogger("collector-repository")
 type CollectorRepository struct {
 	writeAPI api.WriteAPIBlocking
 	queryAPI api.QueryAPI
-	client influxdb2.Client
+	client   influxdb2.Client
 }
 
 func NewCollectorRepository(writeAPIconnection api.WriteAPIBlocking, queryAPIconnection api.QueryAPI, clientConnection influxdb2.Client) interfaces.CollectorRepository {
 	return &CollectorRepository{
 		writeAPI: writeAPIconnection,
-    queryAPI: queryAPIconnection,
-		client: clientConnection,
+		queryAPI: queryAPIconnection,
+		client:   clientConnection,
 	}
 }
 
 func (cr *CollectorRepository) Save(measuresDto *dto.SensorDataDto) error {
 	dataToSave := entity.NewSensorData(measuresDto.Temperature, measuresDto.Luminosity)
 	point := influxdb2.NewPoint("sensor",
-	map[string]string{"device": "ESP32"},
-	map[string]interface{}{
-		"temperature": dataToSave.Temperature, 
-		"luminosity": dataToSave.Luminosity,
-	},
-	time.Now())
-	
+		map[string]string{"device": "ESP32"},
+		map[string]interface{}{
+			"temperature": dataToSave.Temperature,
+			"luminosity":  dataToSave.Luminosity,
+		},
+		time.Now())
+
 	err := cr.writeAPI.WritePoint(context.Background(), point)
 	defer cr.client.Close()
 
