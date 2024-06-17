@@ -4,4 +4,4 @@ influxdb2/*
 
 # env
 
-.env*
+.env
