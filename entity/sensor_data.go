@@ -1,13 +1,15 @@
 package entity
 
 type SensorData struct {
-  Temperature float32 
-  Luminosity int32
+	Temperature float32
+	Luminosity  int32
+	Humidity    float32
 }
 
-func NewSensorData(temperature float32, luminosity int32) *SensorData {
-  return &SensorData{
-    Temperature: temperature,
-    Luminosity: luminosity,
-  }
+func NewSensorData(humidity, temperature float32, luminosity int32) *SensorData {
+	return &SensorData{
+		Temperature: temperature,
+		Luminosity:  luminosity,
+		Humidity:    humidity,
+	}
 }
