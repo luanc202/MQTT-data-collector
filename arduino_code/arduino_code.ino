@@ -35,8 +35,6 @@ void setup() {
 
   client.setServer(mqtt_server, 1883);
 
-  pinMode(PHOTORESISTOR_PIN, INPUT);
-
   delay(3000);
 }
 
