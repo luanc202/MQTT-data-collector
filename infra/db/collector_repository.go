@@ -30,12 +30,12 @@ func NewCollectorRepository(writeAPIconnection api.WriteAPIBlocking, queryAPIcon
 }
 
 func (cr *CollectorRepository) Save(measuresDto *dto.SensorDataDto) error {
-	dataToSave := entity.NewSensorData(measuresDto.Temperature, measuresDto.Luminosity)
+	dataToSave := entity.NewSensorData(measuresDto.Distance, measuresDto.Luminosity)
 	point := influxdb2.NewPoint("sensor",
 		map[string]string{"device": "ESP32"},
 		map[string]interface{}{
-			"temperature": dataToSave.Temperature,
-			"luminosity":  dataToSave.Luminosity,
+			"distance":   dataToSave.Distance,
+			"luminosity": dataToSave.Luminosity,
 		},
 		time.Now())
 
@@ -46,7 +46,7 @@ func (cr *CollectorRepository) Save(measuresDto *dto.SensorDataDto) error {
 		return fmt.Errorf("error on saving data: %w", err)
 	}
 
-	logger.Info(fmt.Sprintf("Saved new entry with values for temperature: %f and luminosity: %d", measuresDto.Temperature, measuresDto.Luminosity))
+	logger.Info(fmt.Sprintf("Saved new entry with values for distance: %d and luminosity: %d", measuresDto.Distance, measuresDto.Luminosity))
 
 	return nil
 }

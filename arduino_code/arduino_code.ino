@@ -2,12 +2,12 @@
 #include <DHT.h>
 #include <PubSubClient.h>
 
-const char* ssid = "your wifi SSID";
-const char* password = "your wifi password";
+const char* ssid = "Voyager 6";
+const char* password = "asimov@3AB";
 
-const char* mqtt_server = "your mqtt broker url";
-const char* mqtt_port = "mqtt port";
-const char* mqtt_topic = "mqtt topic";
+const char* mqtt_server = "broker.hivemq.com";
+const char* mqtt_port = "1883";
+const char* mqtt_topic = "01f6abf9-e4f1-4254-a2f6-aaf470c689bb";
 
 #define PHOTORESISTOR_PIN 36
 #define DHTPIN 12
